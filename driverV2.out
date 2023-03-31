@@ -1,0 +1,298 @@
+
+ *** TO BE DONE
+ Test token table (for (i=tstart+1; i <tend; i++))
+ Test tok2lex(i), lex2tok(tok2lex(i)) for non-keyword tokens 
+
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(258) =     (null);    lex2tok(tok2lex(258)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(259) =     (null);    lex2tok(tok2lex(259)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(260) =     (null);    lex2tok(tok2lex(260)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(261) =     (null);    lex2tok(tok2lex(261)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(262) =     (null);    lex2tok(tok2lex(262)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(263) =     (null);    lex2tok(tok2lex(263)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(264) =     (null);    lex2tok(tok2lex(264)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(265) =     (null);    lex2tok(tok2lex(265)) =    0 
+
+
+ Test token table (for (i=kstart+1; i <kend; i++))
+ Test tok2lex(i), lex2tok(tok2lex(i)) for keyword tokens 
+
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(268) =     (null);    lex2tok(tok2lex(268)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(269) =     (null);    lex2tok(tok2lex(269)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(270) =     (null);    lex2tok(tok2lex(270)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(271) =     (null);    lex2tok(tok2lex(271)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(272) =     (null);    lex2tok(tok2lex(272)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(273) =     (null);    lex2tok(tok2lex(273)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(274) =     (null);    lex2tok(tok2lex(274)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(275) =     (null);    lex2tok(tok2lex(275)) =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(276) =     (null);    lex2tok(tok2lex(276)) =    0 
+
+
+ Test token table for 1 char tokens)
+ Test tok2lex('x'), lex2tok(tok2lex('x')) 1 char tokens 
+
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex($)   =     (null);    lex2tok(tok2lex($))   =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(()   =     (null);    lex2tok(tok2lex(())   =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex())   =     (null);    lex2tok(tok2lex()))   =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(*)   =     (null);    lex2tok(tok2lex(*))   =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(+)   =     (null);    lex2tok(tok2lex(+))   =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(,)   =     (null);    lex2tok(tok2lex(,))   =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(-)   =     (null);    lex2tok(tok2lex(-))   =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(.)   =     (null);    lex2tok(tok2lex(.))   =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(/)   =     (null);    lex2tok(tok2lex(/))   =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(:)   =     (null);    lex2tok(tok2lex(:))   =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(;)   =     (null);    lex2tok(tok2lex(;))   =    0 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(=)   =     (null);    lex2tok(tok2lex(=))   =    0 
+
+
+ Test keyword table (for (i=kstart+1; i <kend; i++))
+ Test tok2lex(i), key2tok(tok2lex(i)) for keyword tokens 
+
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(268) =     (null);    key2tok(tok2lex(268)) =    0;
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(269) =     (null);    key2tok(tok2lex(269)) =    0;
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(270) =     (null);    key2tok(tok2lex(270)) =    0;
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(271) =     (null);    key2tok(tok2lex(271)) =    0;
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(272) =     (null);    key2tok(tok2lex(272)) =    0;
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(273) =     (null);    key2tok(tok2lex(273)) =    0;
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(274) =     (null);    key2tok(tok2lex(274)) =    0;
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(275) =     (null);    key2tok(tok2lex(275)) =    0;
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ tok2lex(276) =     (null);    key2tok(tok2lex(276)) =    0;
+
+
+ Test keyword table for specific values (non-keywords):-
+ Lexemes:- test1, id, number, :=, undef, predef, tempty, error, type, !?*; 
+
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ key2tok("test1")   =    0;    tok2lex(key2tok("test1"))  = (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ key2tok("id")      =    0;    tok2lex(key2tok("id"))     = (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ key2tok("number")  =    0;    tok2lex(key2tok("number")) = (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ key2tok(":=")      =    0;    tok2lex(key2tok(":="))     = (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ key2tok("undef")   =    0;    tok2lex(key2tok("undef"))  = (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ key2tok("predef")  =    0;    tok2lex(key2tok("predef")) = (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ key2tok("tempty")  =    0;    tok2lex(key2tok("tempty")) = (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ key2tok("error")   =    0;    tok2lex(key2tok("error"))  = (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ key2tok("type")    =    0;    tok2lex(key2tok("type"))   = (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ key2tok("!?*;")    =    0;    tok2lex(key2tok("!?*;"))   = (null) 
+
+
+ Test lex2tok (both tables) for specific values (non keywords):-
+ Lexemes:- test1, id, number, :=, undef, predef, tempty, error, type 
+
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("test1")   =    0;    tok2lex(lex2tok("test1"))  =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("id")      =    0;    tok2lex(lex2tok("id"))     =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("number")  =    0;    tok2lex(lex2tok("number")) =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok(":=")      =    0;    tok2lex(lex2tok(":="))     =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("undef")   =    0;    tok2lex(lex2tok("undef"))  =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("predef")  =    0;    tok2lex(lex2tok("predef")) =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("tempty")  =    0;    tok2lex(lex2tok("tempty")) =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("error")   =    0;    tok2lex(lex2tok("error"))  =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("type")    =    0;    tok2lex(lex2tok("type"))   =     (null) 
+
+
+ Test lex2tok (both tables) for specific values (keywords):-
+ Lexemes:- program input output var begin boolean integer real 
+
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("program") =    0;     tok2lex(lex2tok("program")) =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("input")   =    0;     tok2lex(lex2tok("input"))   =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("output")  =    0;     tok2lex(lex2tok("output"))  =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("var")     =    0;     tok2lex(lex2tok("var"))     =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("begin")   =    0;     tok2lex(lex2tok("begin"))   =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("boolean") =    0;     tok2lex(lex2tok("boolean")) =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("integer"  =    0;     tok2lex(lex2tok("integer")) =     (null) 
+ *** TO BE DONE
+ *** TO BE DONE
+ *** TO BE DONE
+ lex2tok("real")    =    0;     tok2lex(lex2tok("real"))    =     (null) 
+
+
+ End of tests
