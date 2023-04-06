@@ -49,11 +49,31 @@ static int pget_token() {
 /*  PRIVATE METHODS for this OBJECT  (using "static" in C)            */
 /**********************************************************************/
 
+/* PROGRAM_HEADER */
+static void program_header();
+
+/* VAR_PART */
+static void type();
+static void id_list();
+static void var_dec();
+static void var_dec_list();
+static void var_part();
+
+/* STAT_PART */
+static void operand();
+static void factor();
+static void term();
+static void expr();
+static void assign_stat();
+static void stat();
+static void stat_list();
+static void stat_part();
+
 /**********************************************************************/
 /* The Parser functions                                               */
 /**********************************************************************/
 static void match(int t) {
-    if(DEBUG) printf("\n --------In match expected: %4d, found: %4d", t, lookahead);
+    if(DEBUG) printf("\n --------In match expected: %s found: %s", tok2lex(t), tok2lex(lookahead));
     if (lookahead == t) lookahead = pget_token();
     else {
         is_parse_ok=0;
@@ -68,20 +88,152 @@ static void program_header() {
    if (DEBUG) printf("\n *** In  program_header");
    match(program); match(id); match('('); match(input);
    match(','); match(output); match(')'); match(';');
+   printf("\n *** Out program_header\n");
+}
+
+/* VAR_PART */
+static void type() {
+   if (DEBUG) printf("\n *** In  type");
+   switch(lookahead) {
+      case integer:
+         match(integer);
+         break;
+      case boolean:
+         match(boolean);
+         break;
+      case real:
+         match(real);
+         break;
+      default:
+         printf("Error in type\n");
+         is_parse_ok = 0;
+         break;
+   }
+   printf("\n *** Out  type");
+}
+
+static void id_list() {
+   if (DEBUG) printf("\n *** In  id_list");
+   if(lookahead == id) {
+      match(id);
+   }
+   if(lookahead == ',') {
+      match(',');
+      id_list();
+   }
+   printf("\n *** Out  id_list");
+}
+
+static void var_dec() {
+   if (DEBUG) printf("\n *** In  var_dec");
+   id_list();
+   match(':');
+   type();
+   match(';');
+   printf("\n *** Out  var_dec");
+}
+
+static void var_dec_list() {
+   if (DEBUG) printf("\n *** In  var_dec_list");
+   var_dec();
+   if(lookahead == id) {
+      var_dec_list();
+   }
+   printf("\n *** Out  var_dec_list");
 }
 
 static void var_part() {
    if (DEBUG) printf("\n *** In  var_part");
-   match(var); match(id); match(','); match(id); 
-   match(','); match(id); match(':'); match(integer); 
-   match(';');
+   match(var); 
+   var_dec_list();
+   printf("\n *** Out var_part\n");
+}
+
+/* STAT_PART */
+static void operand() {
+   if (DEBUG) printf("\n *** In  operand");
+   switch(lookahead) {
+   case id:
+      match(id);
+      break;
+   case number:
+      match(number);
+      break;
+   default:
+      printf("Error in operand\n");
+      is_parse_ok = 0;
+      break;
+   }
+   printf("\n *** Out operand");
+}
+
+static void factor() {
+   if (DEBUG) printf("\n *** In  factor");
+   if(lookahead == '(') {
+      match('(');
+      expr();
+      match(')');
+   } else {
+      operand();
+   }
+   printf("\n *** Out factor");
+}
+
+static void term() {
+   if (DEBUG) printf("\n *** In  term");
+   factor();
+   if(lookahead == '*') {
+      match('*');
+      term();
+   }
+   printf("\n *** Out term");
+}
+
+static void expr() {
+   if (DEBUG) printf("\n *** In  expr");
+   term();
+   if(lookahead == '+') {
+      match('+');
+      expr();
+   }
+   printf("\n *** Out expr");
+}
+
+static void assign_stat() {
+   if (DEBUG) printf("\n *** In  assign_stat");
+   if(lookahead == id) {
+      match(id);
+   }
+   if(lookahead == predef) {
+      match(predef);
+      expr();
+   }
+   printf("\n *** Out assign_stat");
+}
+
+static void stat() {
+   if (DEBUG) printf("\n *** In  stat");
+   assign_stat();
+   printf("\n *** Out stat");
+}
+
+static void stat_list() {
+   if (DEBUG) printf("\n *** In  stat_list");
+   stat();
+   if(lookahead == ';') {
+      match(';');
+      stat_list();
+   }
+   printf("\n *** Out stat_list");
 }
 
 static void stat_part() {
    if (DEBUG) printf("\n *** In  stat_part");
-   match(begin); match(id); match(predef); match(id); match('+');
-   match(id); match('*'); match(number); match(end);
+   match(begin); 
+   stat_list();
+   match(end);
    match('.');
+   printf("\n *** Out stat_part\n");
 }
    
 /**********************************************************************/

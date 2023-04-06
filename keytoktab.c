@@ -72,7 +72,21 @@ static tab keywordtab[] = {
 /**********************************************************************/
 void p_toktab()
 {
-	printf("\n *** TO BE DONE");
+	printf("________________________________________________________\n");
+	printf(" THE PROGRAM KEYWORDS\n");
+    printf("________________________________________________________\n");
+    for(int i = 0; i < sizeof(keywordtab) / sizeof(tab) - 1; i++) {
+        printf("%10s %5d\n", keywordtab[i].text, keywordtab[i].token);
+    }
+
+    printf("________________________________________________________\n");
+    printf(" THE PROGRAM TOKENS\n");
+    printf("________________________________________________________\n");
+    for(int i = 0; i < sizeof(tokentab) / sizeof(tab) - 1; i++) {
+        printf("%10s %5d\n", tokentab[i].text, tokentab[i].token);
+    }
+
+    printf("________________________________________________________\n");
 }
 
 /**********************************************************************/
@@ -80,8 +94,21 @@ void p_toktab()
 /**********************************************************************/
 toktyp lex2tok(char *fplex)
 {
-	printf("\n *** TO BE DONE");
-	return 0;
+	/* Non-keyword tokens */
+	for(int i = 0; i < sizeof(tokentab) / sizeof(tab); i++) {
+        if(!strcmp(tokentab[i].text, fplex)) {
+            return tokentab[i].token;
+        }
+    }
+
+	/* Keyword tokens */
+	for(int i = 0; i < sizeof(keywordtab) / sizeof(tab); i++) {
+        if(!strcmp(keywordtab[i].text, fplex)) {
+            return keywordtab[i].token;
+        }
+    }
+
+    return id;
 }
 
 /**********************************************************************/
@@ -89,22 +116,33 @@ toktyp lex2tok(char *fplex)
 /**********************************************************************/
 toktyp key2tok(char *fplex)
 {
-	printf("\n *** TO BE DONE");
-	return 0;
+	for(int i = 0; i < sizeof(keywordtab) / sizeof(tab); i++) {
+		if(!strcmp(keywordtab[i].text, fplex)) {
+			return keywordtab[i].token;
+		}
+	}
+	return id;
 }
 
 /**********************************************************************/
 /* tok2lex - convert a token to a lexeme                              */
 /**********************************************************************/
-char *tok2lex(toktyp ftok)
-{
-	for (int i = 0; i < sizeof(tokentab) / sizeof(tab); i++) {
-        if (tokentab[i].token == ftok) {
+char *tok2lex(toktyp ftok) {
+	/* Non-keyword tokens */
+	for(int i = 0; i < sizeof(tokentab) / sizeof(tab); i++) {
+        if(tokentab[i].token == ftok) {
             return tokentab[i].text;
         }
     }
-    
-    return "UNKNOWN_TOKEN"; // return string for unknown token
+
+	/* Keyword tokens */
+	for(int i = 0; i < sizeof(keywordtab) / sizeof(tab); i++) {
+        if(keywordtab[i].token == ftok) {
+            return keywordtab[i].text;
+        }
+    }
+
+    return "TERROR"; 
 }
 
 /**********************************************************************/
