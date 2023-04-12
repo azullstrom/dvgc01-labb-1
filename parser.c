@@ -20,7 +20,7 @@
 /**********************************************************************/
 /* OBJECT ATTRIBUTES FOR THIS OBJECT (C MODULE)                       */
 /**********************************************************************/
-#define DEBUG 1
+#define DEBUG 0
 static int  lookahead=0;
 static int  is_parse_ok=1;
 
@@ -86,8 +86,17 @@ static void match(int t) {
 /**********************************************************************/
 static void program_header() {
    if (DEBUG) printf("\n *** In  program_header");
-   match(program); match(id); match('('); match(input);
-   match(','); match(output); match(')'); match(';');
+   match(program); 
+   if(lookahead == id) {
+      addp_name(get_lexeme());
+      match(id);
+   } else {
+      printf("Error in program_header\n");
+      is_parse_ok = 0;
+   }
+   match('('); match(input);
+   match(','); match(output); 
+   match(')'); match(';');
    if (DEBUG) printf("\n *** Out program_header\n");
 }
 
@@ -96,16 +105,20 @@ static void type() {
    if (DEBUG) printf("\n *** In  type");
    switch(lookahead) {
       case integer:
+         setv_type(integer);
          match(integer);
          break;
       case boolean:
+         setv_type(boolean);
          match(boolean);
          break;
       case real:
+         setv_type(real);
          match(real);
          break;
       default:
          printf("Error in type\n");
+         setv_type(error);
          is_parse_ok = 0;
          break;
    }
@@ -115,6 +128,7 @@ static void type() {
 static void id_list() {
    if (DEBUG) printf("\n *** In  id_list");
    if(lookahead == id) {
+      addv_name(get_lexeme());
       match(id);
    }
    if(lookahead == ',') {
@@ -246,6 +260,7 @@ int parser() {
    program_header();               // call the first grammar rule
    var_part();
    stat_part();
+   p_symtab();
    return is_parse_ok;             // status indicator
 }
 

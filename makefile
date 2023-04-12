@@ -22,3 +22,11 @@ p4test:
 p4:
 	gcc -Wall -o parser driver.c parser.c keytoktab.c lexer.c symtab.c
 	./parser < testok1.pas > DriverV4.out
+p5test:
+	gcc -Wall -c Doptab.c
+	gcc -Wall -c optab.c
+	gcc -Wall -o toptab Doptab.c optab.c keytoktab.c
+	./toptab > Doptab.out
+p5:
+	gcc -Wall -o parser driver.c parser.c keytoktab.c lexer.c symtab.c optab.c
+	./parser < testok1.pas > DriverV5.out
