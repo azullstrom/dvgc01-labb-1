@@ -1,0 +1,90 @@
+
+ *** In  parser
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok1(input, output);  
+var A, B, C: integer;  
+
+begin
+A := B + C * 2  
+end.
+$
+________________________________________________________
+ *** In  program_header
+ --------In match expected: program found: program
+ --------In match expected: id found: id
+ --------In match expected: ( found: (
+ --------In match expected: input found: input
+ --------In match expected: , found: ,
+ --------In match expected: output found: output
+ --------In match expected: ) found: )
+ --------In match expected: ; found: ;
+ *** Out program_header
+
+ *** In  var_part
+ --------In match expected: var found: var
+ *** In  var_dec_list
+ *** In  var_dec
+ *** In  id_list
+ --------In match expected: id found: id
+ --------In match expected: , found: ,
+ *** In  id_list
+ --------In match expected: id found: id
+ --------In match expected: , found: ,
+ *** In  id_list
+ --------In match expected: id found: id
+ *** Out  id_list
+ *** Out  id_list
+ *** Out  id_list
+ --------In match expected: : found: :
+ *** In  type
+ --------In match expected: integer found: integer
+ *** Out  type
+ --------In match expected: ; found: ;
+ *** Out  var_dec
+ *** Out  var_dec_list
+ *** Out var_part
+
+ *** In  stat_part
+ --------In match expected: begin found: begin
+ *** In  stat_list
+ *** In  stat
+ *** In  assign_stat
+ --------In match expected: id found: id
+ --------In match expected: := found: :=
+ *** In  expr
+ *** In  term
+ *** In  factor
+ *** In  operand
+ --------In match expected: id found: id
+ *** Out operand
+ *** Out factor
+ *** Out term
+ --------In match expected: + found: +
+ *** In  expr
+ *** In  term
+ *** In  factor
+ *** In  operand
+ --------In match expected: id found: id
+ *** Out operand
+ *** Out factor
+ --------In match expected: * found: *
+ *** In  term
+ *** In  factor
+ *** In  operand
+ --------In match expected: id found: id
+ *** Out operand
+ *** Out factor
+ *** Out term
+ *** Out term
+ *** Out expr
+ *** Out expr
+ *** Out assign_stat
+ *** Out stat
+ *** Out stat_list
+ --------In match expected: end found: end
+ --------In match expected: . found: .
+ *** Out stat_part
+ 
+ Parse Successful! 

@@ -1,0 +1,41 @@
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok1(input, output);  
+var A, B, C: integer;  
+
+begin
+A := B + C * 2  
+end.
+$
+________________________________________________________
+ token is  268, lexeme is    program 
+ token is  258, lexeme is    testok1 
+ token is   40, lexeme is          ( 
+ token is  269, lexeme is      input 
+ token is   44, lexeme is          , 
+ token is  270, lexeme is     output 
+ token is   41, lexeme is          ) 
+ token is   59, lexeme is          ; 
+ token is  271, lexeme is        var 
+ token is  258, lexeme is          A 
+ token is   44, lexeme is          , 
+ token is  258, lexeme is          B 
+ token is   44, lexeme is          , 
+ token is  258, lexeme is          C 
+ token is   58, lexeme is          : 
+ token is  275, lexeme is    integer 
+ token is   59, lexeme is          ; 
+ token is  272, lexeme is      begin 
+ token is  258, lexeme is          A 
+ token is  260, lexeme is         := 
+ token is  258, lexeme is          B 
+ token is   43, lexeme is          + 
+ token is  258, lexeme is          C 
+ token is   42, lexeme is          * 
+ token is  258, lexeme is          2 
+ token is  273, lexeme is        end 
+ token is   46, lexeme is          . 
+ token is   36, lexeme is          $ 
+
