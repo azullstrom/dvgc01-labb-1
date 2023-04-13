@@ -56,8 +56,7 @@ static void set_addr(int ftref, int    faddr)  { addr[ftref] = faddr; }
 /**********************************************************************/
 /*  Add a row to the symbol table                                     */
 /**********************************************************************/
-static void addrow(char *fname, toktyp frole, toktyp ftype, 
-                   int fsize, int faddr) {
+static void addrow(char *fname, toktyp frole, toktyp ftype, int fsize, int faddr) {
     set_name(numrows, fname);
     set_role(numrows, frole);
     set_type(numrows, ftype);
@@ -111,7 +110,6 @@ void p_symtab() {
    printf("\n________________________________________________________");
    printf("\n STATIC STORAGE REQUIRED is %d BYTES", get_size(startp));
    printf("\n________________________________________________________\n");
-   printf("\n________________________________________________________");
 }
 
 /**********************************************************************/

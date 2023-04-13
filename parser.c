@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdlib.h>
 
 /**********************************************************************/
 /* Other OBJECT's METHODS (IMPORTED)                                  */
@@ -15,7 +16,7 @@
 #include "keytoktab.h"
 #include "lexer.h"          
 #include "symtab.h"
-/* #include "optab.h"       */       /* when the optab     is added   */
+#include "optab.h"
 
 /**********************************************************************/
 /* OBJECT ATTRIBUTES FOR THIS OBJECT (C MODULE)                       */
@@ -60,10 +61,10 @@ static void var_dec_list();
 static void var_part();
 
 /* STAT_PART */
-static void operand();
-static void factor();
-static void term();
-static void expr();
+static toktyp operand();
+static toktyp factor();
+static toktyp term();
+static toktyp expr();
 static void assign_stat();
 static void stat();
 static void stat_list();
@@ -86,12 +87,18 @@ static void match(int t) {
 /**********************************************************************/
 static void program_header() {
    if (DEBUG) printf("\n *** In  program_header");
-   match(program); 
+   /* Check first set for program_header() */
+   if(lookahead == program) {
+      match(program); 
+   } else {
+      printf("\nSyntax Error: Expected <program> as first set for program_header().");
+      is_parse_ok = 0;
+   }
    if(lookahead == id) {
       addp_name(get_lexeme());
       match(id);
    } else {
-      printf("Error in program_header\n");
+      printf("\nSyntax Error: Expected ID after <program>.");
       is_parse_ok = 0;
    }
    match('('); match(input);
@@ -117,10 +124,16 @@ static void type() {
          match(real);
          break;
       default:
-         printf("Error in type\n");
+         printf("\nSemantic Error: Invalid type <%s>.", get_lexeme());
          setv_type(error);
+         match(id);
          is_parse_ok = 0;
          break;
+   }
+   /* Check follow set ';' for type() */
+   if(lookahead != ';') {
+      printf("\nSyntax Error: Expected ';' as follow set for type().");
+      is_parse_ok = 0;
    }
    if (DEBUG) printf("\n *** Out  type");
 }
@@ -128,7 +141,12 @@ static void type() {
 static void id_list() {
    if (DEBUG) printf("\n *** In  id_list");
    if(lookahead == id) {
-      addv_name(get_lexeme());
+      if(!find_name(get_lexeme())) {
+         addv_name(get_lexeme());
+      } else {
+         printf("\nSemantic Error: Duplicate ID's declared as %s.", get_lexeme());
+         is_parse_ok = 0;
+      }
       match(id);
    }
    if(lookahead == ',') {
@@ -141,7 +159,13 @@ static void id_list() {
 static void var_dec() {
    if (DEBUG) printf("\n *** In  var_dec");
    id_list();
-   match(':');
+   /* Check follow set ':' for id_list() */
+   if(lookahead == ':') {
+      match(':');
+   } else {
+      printf("\nSyntax Error: Expected ':' as follow set for id_list().");
+      is_parse_ok = 0;
+   }
    type();
    match(';');
    if (DEBUG) printf("\n *** Out  var_dec");
@@ -158,69 +182,101 @@ static void var_dec_list() {
 
 static void var_part() {
    if (DEBUG) printf("\n *** In  var_part");
-   match(var); 
+   /* Check first set <var> for var_part() */
+   if(lookahead == var) {
+      match(var); 
+   } else {
+      printf("\nSyntax Error: Expected <var> as first set for var_part().");
+      is_parse_ok = 0;
+   }
    var_dec_list();
    if (DEBUG) printf("\n *** Out var_part\n");
 }
 
 /* STAT_PART */
-static void operand() {
+static toktyp operand() {
    if (DEBUG) printf("\n *** In  operand");
    switch(lookahead) {
    case id:
       match(id);
+      return get_ntype(get_lexeme());
       break;
    case number:
       match(number);
+      return get_ntype(get_lexeme());
       break;
    default:
-      printf("Error in operand\n");
+      printf("\nSyntax Error: Expected operand.");
       is_parse_ok = 0;
+      return error;
       break;
    }
    if (DEBUG) printf("\n *** Out operand");
 }
 
-static void factor() {
+static toktyp factor() {
    if (DEBUG) printf("\n *** In  factor");
+   toktyp type;
    if(lookahead == '(') {
       match('(');
-      expr();
+      type = expr();
       match(')');
    } else {
-      operand();
+      type = operand();
    }
    if (DEBUG) printf("\n *** Out factor");
+   return type;
 }
 
-static void term() {
+static toktyp term() {
    if (DEBUG) printf("\n *** In  term");
-   factor();
+   toktyp type = factor();
    if(lookahead == '*') {
       match('*');
-      term();
+      type = get_otype('*', type, term());
    }
    if (DEBUG) printf("\n *** Out term");
+   return type;
 }
 
-static void expr() {
+static toktyp expr() {
    if (DEBUG) printf("\n *** In  expr");
-   term();
+   if(!find_name(get_lexeme()) && !atoi(get_lexeme())) {
+      printf("\nSemantic Error: var %s is not declared.", get_lexeme());
+      is_parse_ok = 0;
+   }
+
+   toktyp type = term();
    if(lookahead == '+') {
       match('+');
-      expr();
+      type = get_otype('+', type, expr());
    }
    if (DEBUG) printf("\n *** Out expr");
+   return type;
 }
 
 static void assign_stat() {
    if (DEBUG) printf("\n *** In  assign_stat");
    if(lookahead == id) {
+      if(!find_name(get_lexeme())) {
+         printf("\nSemantic Error: var %s is not declared.", get_lexeme());
+         is_parse_ok = 0;
+      }
       match(id);
+   } else {
+      printf("\nSyntax Error: Expected ID before := definition.");
+      is_parse_ok = 0;
    }
    if(lookahead == assign) {
       match(assign);
       expr();
+   } else {
+      printf("\nSyntax Error: Expected := after ID definition.");
+      is_parse_ok = 0;
+   }
+   /* If there is more lines of code than the example code */
+   if(lookahead == id) {
+      assign_stat();
    }
    if (DEBUG) printf("\n *** Out assign_stat");
 }
@@ -243,7 +299,13 @@ static void stat_list() {
 
 static void stat_part() {
    if (DEBUG) printf("\n *** In  stat_part");
-   match(begin); 
+   /* Check first set <begin> for stat_part() */
+   if(lookahead == begin) {
+      match(begin);
+   } else {
+      printf("\nSyntax Error: Expected <begin> as first set for stat_part().");
+      is_parse_ok = 0;
+   }
    stat_list();
    match(end);
    match('.');
@@ -260,6 +322,11 @@ int parser() {
    program_header();               // call the first grammar rule
    var_part();
    stat_part();
+   if(is_parse_ok) {
+      printf("\nPARSE SUCCESSFUL!");
+   } else {
+      printf("\nPARSE FAILED!");
+   }
    p_symtab();
    return is_parse_ok;             // status indicator
 }
