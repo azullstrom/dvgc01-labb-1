@@ -89,7 +89,6 @@ int get_token() {
       pbuf++;
    }
 
-
    /* Get the first character from the buffer */
    get_char();
 
@@ -98,7 +97,7 @@ int get_token() {
       while(!isspace(buffer[pbuf]) && !ispunct(buffer[pbuf])) {
          get_char();
       }
-      return lex2tok(lexbuf);
+      return number;
    }
 
    /* If alphanumerical */
