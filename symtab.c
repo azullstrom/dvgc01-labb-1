@@ -170,7 +170,7 @@ void setv_type(toktyp ftype) {
 /*  Get the type of a variable from the symbol table                  */
 /**********************************************************************/
 toktyp get_ntype(char * fpname) {  
-    if(get_ref(fpname) != nfound) {
+    if(find_name(fpname)) {
         return get_type(get_ref(fpname)); 
     }
     return undef;

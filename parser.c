@@ -142,7 +142,7 @@ static void type() {
          match(real);
          break;
       default:
-         psyntax_error("integer, boolean or real", __LINE__);
+         psyntax_error("type", __LINE__);
          setv_type(undef);
          break;
    }
