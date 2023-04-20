@@ -1,3 +1,5 @@
+/* Anders Ullström */
+
 /**********************************************************************/
 /* lab 1 DVG C01 - Parser OBJECT                                      */
 /**********************************************************************/
@@ -20,7 +22,7 @@
 /**********************************************************************/
 /* OBJECT ATTRIBUTES FOR THIS OBJECT (C MODULE)                       */
 /**********************************************************************/
-#define DEBUG 0
+#define DEBUG 1
 static int  lookahead=0;
 static int  is_parse_ok=1;
 
@@ -70,35 +72,48 @@ static void stat_list();
 static void stat_part();
 
 /* ERROR HANDLING */
-static void psyntax_error(char *expected, int line) {
-   if(DEBUG)
-      printf("\nSyntax Error on line %d: Expected %s found %s", line, expected, tok2lex(lex2tok(get_lexeme())));
-   else
-      printf("\nSyntax Error: Expected %s found %s", expected, tok2lex(lex2tok(get_lexeme())));
+static void psyntax_error_symbol(char *expected) {
+   printf("\nSYNTAX: Symbol expected %s found %s", expected, get_lexeme());
    is_parse_ok = 0;
 } 
 
-static void psemantic_error_not_declared(int line) {
-   if(DEBUG)
-      printf("\nSemantic Error on line %d: var %s is not declared", line, get_lexeme());
-   else
-      printf("\nSemantic Error: var %s is not declared", get_lexeme());
+static void psyntax_error_id() {
+   printf("\nSYNTAX: ID expected found %s", get_lexeme());
    is_parse_ok = 0;
 } 
 
-static void psemantic_error_duplicate(int line) {
-   if(DEBUG)
-      printf("\nSemantic Error on line %d: Duplicate id declared as %s", line, get_lexeme());
-   else
-      printf("\nSemantic Error: Duplicate id declared as %s", get_lexeme());
+static void psyntax_error_type() {
+   printf("\nSYNTAX: Type name expected found %s", get_lexeme());
+   is_parse_ok = 0;
+} 
+
+static void psyntax_error_operand() {
+   printf("\nSYNTAX: Operand Expected");
+   is_parse_ok = 0;
+} 
+
+static void psyntax_error_extra_symbol() {
+   printf("\nSYNTAX: Extra symbols after end of parse!\n");
+   while(!strstr(get_lexeme(), "$")) {
+      printf("%s ", get_lexeme());
+      lookahead = get_token();
+   }
+   printf("\n");
+   is_parse_ok = 0;
+} 
+
+static void psemantic_error_not_declared() {
+   printf("\nSEMANTIC: ID NOT declared: %s", get_lexeme());
+   is_parse_ok = 0;
+} 
+
+static void psemantic_error_duplicate() {
+   printf("\nSEMANTIC: ID already declared: %s", get_lexeme());
    is_parse_ok = 0;
 }
 
-static void psemantic_error_assign(char *left_type, char *right_type, int line) {
-   if(DEBUG)
-      printf("\nSemantic Error on line %d: Assign types: %s := %s", line, left_type, right_type);
-   else
-      printf("\nSemantic Error: Assign types: %s := %s", left_type, right_type);
+static void psemantic_error_assign(char *left_type, char *right_type) {
+   printf("\nSEMANTIC: Assign types: %s := %s", left_type, right_type);
    is_parse_ok = 0;
 } 
 
@@ -106,7 +121,7 @@ static void psemantic_error_assign(char *left_type, char *right_type, int line) 
 /* The Parser functions                                               */
 /**********************************************************************/
 static void match(int t) {
-    if(DEBUG) printf("\n --------In match expected: %s found: %s", tok2lex(t), tok2lex(lookahead));
+    if(DEBUG) printf("\n --------In match expected: %s found: %s", tok2lex(t), get_lexeme());
     if (lookahead == t) lookahead = get_token();
     else {
         is_parse_ok=0;
@@ -123,20 +138,20 @@ static void program_header() {
    if(lookahead == program) {
       match(program); 
    } else {
-      psyntax_error("program", __LINE__);
+      psyntax_error_symbol("program");
    }
    if(lookahead == id) {
       addp_name(get_lexeme());
       match(id);
    } else {
-      psyntax_error("id", __LINE__);
+      psyntax_error_id();
    }
-   if(lookahead == '(') match('('); else psyntax_error("(", __LINE__);
-   if(lookahead == input) match(input); else psyntax_error("input", __LINE__);
-   if(lookahead == ',') match(','); else psyntax_error(",", __LINE__);
-   if(lookahead == output) match(output); else psyntax_error("output", __LINE__);
-   if(lookahead == ')') match(')'); else psyntax_error(")", __LINE__);
-   if(lookahead == ';') match(';'); else psyntax_error(";", __LINE__);
+   if(lookahead == '(') match('('); else psyntax_error_symbol("(");
+   if(lookahead == input) match(input); else psyntax_error_symbol("input");
+   if(lookahead == ',') match(','); else psyntax_error_symbol(",");
+   if(lookahead == output) match(output); else psyntax_error_symbol("output");
+   if(lookahead == ')') match(')'); else psyntax_error_symbol(")");
+   if(lookahead == ';') match(';'); else psyntax_error_symbol(";");
    if (DEBUG) printf("\n *** Out program_header\n");
 }
 
@@ -157,13 +172,9 @@ static void type() {
          match(real);
          break;
       default:
-         psyntax_error("type", __LINE__);
-         setv_type(undef);
+         psyntax_error_type();
+         setv_type(error);
          break;
-   }
-   /* Check follow set ';' for type() */
-   if(lookahead != ';') {
-      psyntax_error(";", __LINE__);
    }
    if (DEBUG) printf("\n *** Out  type");
 }
@@ -174,7 +185,7 @@ static void id_list() {
       if(!find_name(get_lexeme())) {
          addv_name(get_lexeme());
       } else {
-         psemantic_error_duplicate(__LINE__);
+         psemantic_error_duplicate();
       }
       match(id);
    }
@@ -192,10 +203,15 @@ static void var_dec() {
    if(lookahead == ':') {
       match(':');
    } else {
-      psyntax_error(":", __LINE__);
+      psyntax_error_symbol(":");
    }
    type();
-   match(';');
+   /* Check follow set ';' for type() */
+   if(lookahead != ';') {
+      psyntax_error_symbol(";");
+   } else {
+      match(';');
+   }
    if (DEBUG) printf("\n *** Out  var_dec");
 }
 
@@ -215,7 +231,7 @@ static void var_part() {
    if(lookahead == var) {
       match(var); 
    } else {
-      psyntax_error("var", __LINE__);
+      psyntax_error_symbol("var");
    }
    var_dec_list();
    if (DEBUG) printf("\n *** Out var_part\n");
@@ -227,6 +243,9 @@ static toktyp operand() {
    toktyp type;
    switch(lookahead) {
       case id:
+         if(!find_name(get_lexeme())) {
+            psemantic_error_not_declared();
+         }
          type = get_ntype(get_lexeme());
          match(id);
          return type;
@@ -237,7 +256,7 @@ static toktyp operand() {
          return type;
          break;
       default:
-         psyntax_error("operand", __LINE__);
+         psyntax_error_operand();
          return error;
          break;
       }
@@ -260,18 +279,9 @@ static toktyp factor() {
 
 static toktyp term() {
    if (DEBUG) printf("\n *** In  term");
-   /* If variable does not exist and is not a number */
-   if(!find_name(get_lexeme()) && lookahead != number && lookahead != '(') {
-      psemantic_error_not_declared(__LINE__);
-   }
    toktyp type;
 
-   /* Check first set id or number for expr() */
-   if(lookahead == id || lookahead == number || lookahead == '(') {
-      type = factor();
-   } else {
-      psyntax_error("'(', id or number", __LINE__);
-   }
+   type = factor();
    
    if(lookahead == '*') {
       match('*');
@@ -283,10 +293,6 @@ static toktyp term() {
 
 static toktyp expr() {
    if (DEBUG) printf("\n *** In  expr");
-   /* If variable does not exist and is not a number */
-   if(!find_name(get_lexeme()) && lookahead != number && lookahead != '(') {
-      psemantic_error_not_declared(__LINE__);
-   }
    toktyp type;
 
    /* Check first set id or number for expr() */
@@ -302,44 +308,30 @@ static toktyp expr() {
 
 static void assign_stat() {
    if (DEBUG) printf("\n *** In  assign_stat");
-   if(!find_name(get_lexeme())) {
-      psemantic_error_not_declared(__LINE__);
-   }
    toktyp right_type = error, left_type = get_ntype(get_lexeme());
 
-   match(id);
+   if(lookahead == id) {
+      match(id);
+   } else {
+      psyntax_error_id();
+   }
    if(lookahead == assign) {
       match(assign);
-      right_type = expr();
    } else {
-      psyntax_error(":=", __LINE__);
+      psyntax_error_symbol(":=");
    }
-
+   right_type = expr();
+   
    /* If x := y is not the same */
    if(left_type != right_type) {
-      psemantic_error_assign(tok2lex(left_type), tok2lex(right_type), __LINE__);
-   }
-
-   /* If there is more lines of code (more var definitions/assign) than the example code */
-   if(lookahead == id) {
-      assign_stat();
+      psemantic_error_assign(tok2lex(left_type), tok2lex(right_type));
    }
    if (DEBUG) printf("\n *** Out assign_stat");
 }
 
 static void stat() {
    if (DEBUG) printf("\n *** In  stat");
-   /* 
-   Usually there are more x_stat() functions like if_stat(), while_stat()
-   but for this lab only assign_stat() is necessary because the code has no if statements 
-   and so on. That's why a if statement is defined in this stat() function just to simulate
-   reality.
-   */
-   if(lookahead == id) {
-      assign_stat();
-   } else {
-      psyntax_error("id", __LINE__);
-   }
+   assign_stat();
    if (DEBUG) printf("\n *** Out stat");
 }
 
@@ -359,18 +351,18 @@ static void stat_part() {
    if(lookahead == begin) {
       match(begin);
    } else {
-      psyntax_error("begin", __LINE__);
+      psyntax_error_symbol("begin");
    }
    stat_list();
    if(lookahead == end) {
       match(end);
    } else {
-      psyntax_error("end", __LINE__);
+      psyntax_error_symbol("end");
    }
    if(lookahead == '.') {
       match('.');
    } else {
-      psyntax_error(".", __LINE__);
+      psyntax_error_symbol(".");
    }
    
    if (DEBUG) printf("\n *** Out stat_part\n");
@@ -390,7 +382,7 @@ int parser() {
       var_part();
       stat_part();
       if(lookahead != '$') {
-         psyntax_error("$", __LINE__);
+         psyntax_error_extra_symbol();
       }
       if(is_parse_ok) {
          printf("\nPARSE SUCCESSFUL!");

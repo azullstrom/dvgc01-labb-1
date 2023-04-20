@@ -2,16 +2,16 @@
 ________________________________________________________
  THE PROGRAM TEXT
 ________________________________________________________
-program testz (input, output);
-var A, B, C: integer;
+program sem3(input, output);
+var A, B, C: double;
 
 begin
- A := B + C * 2
-end 
+A := B + C * 2
+end.
 $
 ________________________________________________________
  token is  268, lexeme is    program 
- token is  258, lexeme is      testz 
+ token is  258, lexeme is       sem3 
  token is   40, lexeme is          ( 
  token is  269, lexeme is      input 
  token is   44, lexeme is          , 
@@ -25,7 +25,7 @@ ________________________________________________________
  token is   44, lexeme is          , 
  token is  258, lexeme is          C 
  token is   58, lexeme is          : 
- token is  275, lexeme is    integer 
+ token is  258, lexeme is     double 
  token is   59, lexeme is          ; 
  token is  272, lexeme is      begin 
  token is  258, lexeme is          A 
@@ -36,5 +36,6 @@ ________________________________________________________
  token is   42, lexeme is          * 
  token is  259, lexeme is          2 
  token is  273, lexeme is        end 
+ token is   46, lexeme is          . 
  token is   36, lexeme is          $ 
 

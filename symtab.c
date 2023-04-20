@@ -1,3 +1,5 @@
+/* Anders Ullström */
+
 /**********************************************************************/
 /* lab 1 DVG C01 - Symbol Table OBJECT                                */
 /**********************************************************************/
@@ -173,7 +175,7 @@ toktyp get_ntype(char * fpname) {
     if(find_name(fpname)) {
         return get_type(get_ref(fpname)); 
     }
-    return undef;
+    return error;
 }
 
 /**********************************************************************/
