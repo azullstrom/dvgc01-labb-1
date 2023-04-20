@@ -1,0 +1,34 @@
+echo "*** starting build of parser demo"
+*** starting build of parser demo
+echo "*** compiling each module"
+*** compiling each module
+gcc -c -Wall Dlexer.c
+gcc -c -Wall Dsymtab.c
+gcc -c -Wall Dkeytoktab.c
+gcc -c -Wall Doptab.c
+gcc -c -Wall driver.c
+gcc -c -Wall lexer.c
+gcc -c -Wall parser.c
+gcc -c -Wall symtab.c
+gcc -c -Wall keytoktab.c
+gcc -c -Wall optab.c
+echo "*** End of separate module compilation"
+*** End of separate module compilation
+echo "*** Build and test the driver programs"
+*** Build and test the driver programs
+gcc  -o tlexer Dlexer.c     keytoktab.c    lexer.c
+gcc  -o ttok   Dkeytoktab.c keytoktab.c
+gcc  -o tsym   Dsymtab.c    keytoktab.c    symtab.c
+gcc  -o top    Doptab.c     keytoktab.c    optab.c
+echo "*** testing the driver programs"
+*** testing the driver programs
+echo "Saving previous output"
+Saving previous output
+cp Dlexer.out Dlexer.old
+cp Dtoktab.out Dtoktab.old
+cp Dsymtab.out Dsymtab.old
+cp Doptab.out Doptab.old
+echo "*** Running tests"
+*** Running tests
+./tlexer < testok1.pas > Dlexer.out
+./ttok   > Dtoktab.out

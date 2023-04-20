@@ -1,0 +1,28 @@
+
+________________________________________________________
+ THE OPERATOR TABLE
+________________________________________________________
+   operator        arg1        arg2      result
+________________________________________________________
+          +     integer     integer     integer
+          +        real        real        real
+          +     integer        real        real
+          +        real     integer        real
+          *     integer     integer     integer
+          *        real        real        real
+          *     integer        real        real
+          *        real     integer        real
+________________________________________________________
+ + int  int  is integer 
+ + real real is real 
+ + int  real is real 
+ + real int  is real 
+ * int  int  is integer 
+ * real real is real 
+ * int  real is real 
+ * real int  is real 
+ + bool bool is undef 
+ * bool bool is undef 
+ - int  int  is undef 
+ / int  int  is undef 
+

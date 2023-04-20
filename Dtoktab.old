@@ -1,0 +1,138 @@
+________________________________________________________
+ THE PROGRAM KEYWORDS
+________________________________________________________
+   program   268
+     input   269
+    output   270
+       var   271
+     begin   272
+       end   273
+   boolean   274
+   integer   275
+      real   276
+________________________________________________________
+ THE PROGRAM TOKENS
+________________________________________________________
+        id   258
+    number   259
+        :=   260
+     undef   263
+    predef   261
+    tempty   262
+     error   264
+      type   265
+         $    36
+         (    40
+         )    41
+         *    42
+         +    43
+         ,    44
+         -    45
+         .    46
+         /    47
+         :    58
+         ;    59
+         =    61
+________________________________________________________
+
+ Test token table (for (i=tstart+1; i <tend; i++))
+ Test tok2lex(i), lex2tok(tok2lex(i)) for non-keyword tokens 
+
+ tok2lex(258) =         id;    lex2tok(tok2lex(258)) =  258 
+ tok2lex(259) =     number;    lex2tok(tok2lex(259)) =  259 
+ tok2lex(260) =         :=;    lex2tok(tok2lex(260)) =  260 
+ tok2lex(261) =     predef;    lex2tok(tok2lex(261)) =  261 
+ tok2lex(262) =     tempty;    lex2tok(tok2lex(262)) =  262 
+ tok2lex(263) =      undef;    lex2tok(tok2lex(263)) =  263 
+ tok2lex(264) =      error;    lex2tok(tok2lex(264)) =  264 
+ tok2lex(265) =       type;    lex2tok(tok2lex(265)) =  265 
+
+
+ Test token table (for (i=kstart+1; i <kend; i++))
+ Test tok2lex(i), lex2tok(tok2lex(i)) for keyword tokens 
+
+ tok2lex(268) =    program;    lex2tok(tok2lex(268)) =  268 
+ tok2lex(269) =      input;    lex2tok(tok2lex(269)) =  269 
+ tok2lex(270) =     output;    lex2tok(tok2lex(270)) =  270 
+ tok2lex(271) =        var;    lex2tok(tok2lex(271)) =  271 
+ tok2lex(272) =      begin;    lex2tok(tok2lex(272)) =  272 
+ tok2lex(273) =        end;    lex2tok(tok2lex(273)) =  273 
+ tok2lex(274) =    boolean;    lex2tok(tok2lex(274)) =  274 
+ tok2lex(275) =    integer;    lex2tok(tok2lex(275)) =  275 
+ tok2lex(276) =       real;    lex2tok(tok2lex(276)) =  276 
+
+
+ Test token table for 1 char tokens)
+ Test tok2lex('x'), lex2tok(tok2lex('x')) 1 char tokens 
+
+ tok2lex($)   =          $;    lex2tok(tok2lex($))   =   36 
+ tok2lex(()   =          (;    lex2tok(tok2lex(())   =   40 
+ tok2lex())   =          );    lex2tok(tok2lex()))   =   41 
+ tok2lex(*)   =          *;    lex2tok(tok2lex(*))   =   42 
+ tok2lex(+)   =          +;    lex2tok(tok2lex(+))   =   43 
+ tok2lex(,)   =          ,;    lex2tok(tok2lex(,))   =   44 
+ tok2lex(-)   =          -;    lex2tok(tok2lex(-))   =   45 
+ tok2lex(.)   =          .;    lex2tok(tok2lex(.))   =   46 
+ tok2lex(/)   =          /;    lex2tok(tok2lex(/))   =   47 
+ tok2lex(:)   =          :;    lex2tok(tok2lex(:))   =   58 
+ tok2lex(;)   =          ;;    lex2tok(tok2lex(;))   =   59 
+ tok2lex(=)   =          =;    lex2tok(tok2lex(=))   =   61 
+
+
+ Test keyword table (for (i=kstart+1; i <kend; i++))
+ Test tok2lex(i), key2tok(tok2lex(i)) for keyword tokens 
+
+ tok2lex(268) =    program;    key2tok(tok2lex(268)) =  268;
+ tok2lex(269) =      input;    key2tok(tok2lex(269)) =  269;
+ tok2lex(270) =     output;    key2tok(tok2lex(270)) =  270;
+ tok2lex(271) =        var;    key2tok(tok2lex(271)) =  271;
+ tok2lex(272) =      begin;    key2tok(tok2lex(272)) =  272;
+ tok2lex(273) =        end;    key2tok(tok2lex(273)) =  273;
+ tok2lex(274) =    boolean;    key2tok(tok2lex(274)) =  274;
+ tok2lex(275) =    integer;    key2tok(tok2lex(275)) =  275;
+ tok2lex(276) =       real;    key2tok(tok2lex(276)) =  276;
+
+
+ Test keyword table for specific values (non-keywords):-
+ Lexemes:- test1, id, number, :=, undef, predef, tempty, error, type, !?*; 
+
+ key2tok("test1")   =  258;    tok2lex(key2tok("test1"))  =    id 
+ key2tok("id")      =  258;    tok2lex(key2tok("id"))     =    id 
+ key2tok("number")  =  258;    tok2lex(key2tok("number")) =    id 
+ key2tok(":=")      =  258;    tok2lex(key2tok(":="))     =    id 
+ key2tok("undef")   =  258;    tok2lex(key2tok("undef"))  =    id 
+ key2tok("predef")  =  258;    tok2lex(key2tok("predef")) =    id 
+ key2tok("tempty")  =  258;    tok2lex(key2tok("tempty")) =    id 
+ key2tok("error")   =  258;    tok2lex(key2tok("error"))  =    id 
+ key2tok("type")    =  258;    tok2lex(key2tok("type"))   =    id 
+ key2tok("!?*;")    =  258;    tok2lex(key2tok("!?*;"))   =    id 
+
+
+ Test lex2tok (both tables) for specific values (non keywords):-
+ Lexemes:- test1, id, number, :=, undef, predef, tempty, error, type 
+
+ lex2tok("test1")   =  258;    tok2lex(lex2tok("test1"))  =         id 
+ lex2tok("id")      =  258;    tok2lex(lex2tok("id"))     =         id 
+ lex2tok("number")  =  259;    tok2lex(lex2tok("number")) =     number 
+ lex2tok(":=")      =  260;    tok2lex(lex2tok(":="))     =         := 
+ lex2tok("undef")   =  263;    tok2lex(lex2tok("undef"))  =      undef 
+ lex2tok("predef")  =  261;    tok2lex(lex2tok("predef")) =     predef 
+ lex2tok("tempty")  =  262;    tok2lex(lex2tok("tempty")) =     tempty 
+ lex2tok("error")   =  264;    tok2lex(lex2tok("error"))  =      error 
+ lex2tok("type")    =  265;    tok2lex(lex2tok("type"))   =       type 
+
+
+ Test lex2tok (both tables) for specific values (keywords):-
+ Lexemes:- program input output var begin boolean integer real 
+
+ lex2tok("program") =  268;     tok2lex(lex2tok("program")) =    program 
+ lex2tok("input")   =  269;     tok2lex(lex2tok("input"))   =      input 
+ lex2tok("output")  =  270;     tok2lex(lex2tok("output"))  =     output 
+ lex2tok("var")     =  271;     tok2lex(lex2tok("var"))     =        var 
+ lex2tok("begin")   =  272;     tok2lex(lex2tok("begin"))   =      begin 
+ lex2tok("boolean") =  274;     tok2lex(lex2tok("boolean")) =    boolean 
+ lex2tok("integer"  =  275;     tok2lex(lex2tok("integer")) =    integer 
+ lex2tok("real")    =  276;     tok2lex(lex2tok("real"))    =       real 
+
+
+ End of tests

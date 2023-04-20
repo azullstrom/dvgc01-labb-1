@@ -108,7 +108,10 @@ toktyp lex2tok(char *fplex)
         }
     }
 
-    return id;
+	if(isalpha(*fplex)) 
+		return id;
+	else 
+		return number;
 }
 
 /**********************************************************************/

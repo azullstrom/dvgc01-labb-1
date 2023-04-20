@@ -78,6 +78,9 @@ int get_token() {
    if(pbuf == 0) {
       get_prog();
       pbuffer();
+      if(strlen(buffer) == 2) {
+         return -1;
+      }
    }
 
    /* Initialize lexeme buffer */
@@ -94,7 +97,7 @@ int get_token() {
 
    /* If numerical */
    if(isdigit(lexbuf[0])) {
-      while(!isspace(buffer[pbuf]) && !ispunct(buffer[pbuf])) {
+      while(!isspace(buffer[pbuf]) && !ispunct(buffer[pbuf]) && !isalpha(buffer[pbuf])) {
          get_char();
       }
       return number;
