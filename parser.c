@@ -22,7 +22,7 @@
 /**********************************************************************/
 /* OBJECT ATTRIBUTES FOR THIS OBJECT (C MODULE)                       */
 /**********************************************************************/
-#define DEBUG 1
+#define DEBUG 0
 static int  lookahead=0;
 static int  is_parse_ok=1;
 
@@ -188,6 +188,8 @@ static void id_list() {
          psemantic_error_duplicate();
       }
       match(id);
+   } else {
+      psyntax_error_id();
    }
    if(lookahead == ',') {
       match(',');
@@ -311,6 +313,9 @@ static void assign_stat() {
    toktyp right_type = error, left_type = get_ntype(get_lexeme());
 
    if(lookahead == id) {
+      if(!find_name(get_lexeme())) {
+         psemantic_error_not_declared();
+      }
       match(id);
    } else {
       psyntax_error_id();

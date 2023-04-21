@@ -1,7 +1,7 @@
-program testok4(input, output);
-var A, B, C: integer;  
-    DD, EE, FF: integer;
+program testp (input, output);
+var A, B, C: integer;
 
-begin
+
 A := B + C * 2  
 end.
+$
